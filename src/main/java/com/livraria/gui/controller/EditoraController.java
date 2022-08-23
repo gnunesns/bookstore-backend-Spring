@@ -1,5 +1,6 @@
 package com.livraria.gui.controller;
 
+import com.livraria.gui.apiSwagger.EditoraControllerApi;
 import com.livraria.gui.model.DTO.EditoraDTO;
 import com.livraria.gui.model.Editora;
 import com.livraria.gui.service.EditoraService;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/publisher")
-public class EditoraController {
+public class EditoraController implements EditoraControllerApi {
 
 
     private final EditoraService editoraService;

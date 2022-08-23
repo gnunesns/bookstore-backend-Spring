@@ -1,6 +1,7 @@
 package com.livraria.gui.controller;
 
 
+import com.livraria.gui.apiSwagger.AluguelControllerApi;
 import com.livraria.gui.model.Aluguel;
 import com.livraria.gui.model.DTO.AluguelDTO;
 import com.livraria.gui.model.enums.AluguelStatus;
@@ -23,7 +24,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/renting")
-public class AluguelController {
+public class AluguelController implements AluguelControllerApi {
 
 
     private final AluguelService aluguelService;

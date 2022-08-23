@@ -1,6 +1,7 @@
 package com.livraria.gui.controller;
 
 
+import com.livraria.gui.apiSwagger.LivroControllerApi;
 import com.livraria.gui.model.DTO.LivroDTO;
 import com.livraria.gui.model.Livro;
 import com.livraria.gui.service.LivroService;
@@ -22,7 +23,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/books")
-public class LivroController{
+public class LivroController implements LivroControllerApi {
 
     private final LivroService livroService;
 
@@ -41,7 +42,7 @@ public class LivroController{
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable("id") Long id,
+    public ResponseEntity<Object> updateBook(@PathVariable("id") Long id,
                                              @RequestBody @Valid LivroDTO livroDTO){
 
         Optional<Livro> livroOptional = livroService.getId(id);
