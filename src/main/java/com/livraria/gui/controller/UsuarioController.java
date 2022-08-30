@@ -20,7 +20,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/user")
-
 public class UsuarioController implements UserControllerApi {
 
     private final UsuarioService usuarioService;
