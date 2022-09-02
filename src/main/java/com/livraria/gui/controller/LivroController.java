@@ -37,7 +37,7 @@ public class LivroController implements LivroControllerApi {
         Livro livro = new Livro();
         BeanUtils.copyProperties(livroDTO, livro);
         livro.setTotalAlugado(0);
-        livro.setLocalDateTime(LocalDateTime.now(ZoneId.of("UTC")));
+        livro.setLocalDateTime(LocalDateTime.now(ZoneId.of("GMT-3")));
         return ResponseEntity.status(HttpStatus.CREATED).body(livroService.save(livro));
     }
 
@@ -51,7 +51,7 @@ public class LivroController implements LivroControllerApi {
         }
         Livro livro = new Livro();
         BeanUtils.copyProperties(livroDTO, livro);
-        livro.setLastModifiedDate(LocalDateTime.now(ZoneId.of("UTC")));
+        livro.setLastModifiedDate(LocalDateTime.now(ZoneId.of("GMT-3")));
         livro.setId(livroOptional.get().getId());
         livro.setLocalDateTime(livroOptional.get().getLocalDateTime());
 
@@ -70,7 +70,11 @@ public class LivroController implements LivroControllerApi {
     @GetMapping("/{id}")
     public ResponseEntity<Object> findById(@PathVariable("id") Long id){
         Optional<Livro> livroOptional = livroService.getId(id);
-        return livroOptional.<ResponseEntity<Object>>map(livro -> ResponseEntity.status(HttpStatus.OK).body(livro)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found"));
+        return livroOptional.<ResponseEntity<Object>>map(livro -> ResponseEntity
+                .status(HttpStatus.OK)
+                .body(livro))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Book not found"));
     }
 
 

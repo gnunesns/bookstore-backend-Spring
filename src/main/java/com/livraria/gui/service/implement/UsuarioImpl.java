@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -34,10 +35,9 @@ public class UsuarioImpl implements UsuarioService {
         return usuarioRepository.findById(id);
     }
 
-    // paginação
     @Override
     public Page<Usuario> getAll(Pageable pageable) {
-         return usuarioRepository.findAll(pageable);
+        return usuarioRepository.findAll(pageable);
     }
 
 }

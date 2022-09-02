@@ -41,8 +41,8 @@ public class AluguelController implements AluguelControllerApi {
 
             Aluguel aluguel = new Aluguel();
             BeanUtils.copyProperties(aluguelDTO, aluguel);
-            aluguel.setDataAluguel(LocalDate.now(ZoneId.of("UTC"))); // data do aluguel
-            aluguel.setLocalDateTime(LocalDateTime.now(ZoneId.of("UTC")));
+            aluguel.setDataAluguel(LocalDate.now(ZoneId.of("GMT-3"))); // data do aluguel
+            aluguel.setLocalDateTime(LocalDateTime.now(ZoneId.of("GMT-3")));
 
             aluguel.setStatus(AluguelStatus.IN_PROGRESS);
             Aluguel aluguelCadastrado = aluguelService.save(aluguel);
@@ -87,7 +87,7 @@ public class AluguelController implements AluguelControllerApi {
                                                  @RequestBody @Valid Aluguel aluguel){
         Optional<Aluguel> aluguelOptional = aluguelService.getId(id);
         Aluguel aluguel1 = aluguelOptional.get();
-        aluguel1.setLastModifiedDate(LocalDateTime.now(ZoneId.of("UTC")));
+        aluguel1.setLastModifiedDate(LocalDateTime.now(ZoneId.of("GMT-3")));
         aluguel1.setId(aluguelOptional.get().getId());
         aluguel1.setDataDevolucao(aluguel.getDataDevolucao());
 
