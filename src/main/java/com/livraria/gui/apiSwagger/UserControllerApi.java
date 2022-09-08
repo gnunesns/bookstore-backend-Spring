@@ -7,12 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-
-import java.awt.print.Pageable;
 
 
 @Api("Users module management")
@@ -35,15 +30,6 @@ public interface UserControllerApi {
                     "or user already registered on system")
     })
     ResponseEntity<Object> updateUser(Long id, UsuarioDTO usuarioDTO);
-
-
-    /*
-    @ApiOperation(value = "List all user")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User list found ")
-    })
-    ResponseEntity<Page<Usuario>> getAllUser(java.awt.print.Pageable pageable);
-    */
 
 
     @ApiOperation(value = "Book find by id and user operation")

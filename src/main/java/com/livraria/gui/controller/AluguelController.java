@@ -1,6 +1,7 @@
 package com.livraria.gui.controller;
 
 
+import com.livraria.gui.apiSwagger.AluguelControllerApi;
 import com.livraria.gui.model.Aluguel;
 import com.livraria.gui.model.DTO.AluguelDTO;
 import com.livraria.gui.model.enums.AluguelStatus;
@@ -23,7 +24,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/renting")
-public class AluguelController {
+public class AluguelController implements AluguelControllerApi {
 
 
     private final AluguelService aluguelService;
@@ -40,8 +41,8 @@ public class AluguelController {
 
             Aluguel aluguel = new Aluguel();
             BeanUtils.copyProperties(aluguelDTO, aluguel);
-            aluguel.setDataAluguel(LocalDate.now(ZoneId.of("UTC"))); // data do aluguel
-            aluguel.setLocalDateTime(LocalDateTime.now(ZoneId.of("UTC")));
+            aluguel.setDataAluguel(LocalDate.now(ZoneId.of("GMT-3"))); // data do aluguel
+            aluguel.setLocalDateTime(LocalDateTime.now(ZoneId.of("GMT-3")));
 
             aluguel.setStatus(AluguelStatus.IN_PROGRESS);
             Aluguel aluguelCadastrado = aluguelService.save(aluguel);
@@ -84,9 +85,10 @@ public class AluguelController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> devolution(@PathVariable("id") Long id,
                                                  @RequestBody @Valid Aluguel aluguel){
+
         Optional<Aluguel> aluguelOptional = aluguelService.getId(id);
         Aluguel aluguel1 = aluguelOptional.get();
-        aluguel1.setLastModifiedDate(LocalDateTime.now(ZoneId.of("UTC")));
+        aluguel1.setLastModifiedDate(LocalDateTime.now(ZoneId.of("GMT-3")));
         aluguel1.setId(aluguelOptional.get().getId());
         aluguel1.setDataDevolucao(aluguel.getDataDevolucao());
 
@@ -95,9 +97,7 @@ public class AluguelController {
         } else {
             aluguel1.setStatus(AluguelStatus.ON_TIME);
         }
-
         return ResponseEntity.status(HttpStatus.OK).body(aluguelService.saveDevolution(aluguel1));
-
     }
 
 }

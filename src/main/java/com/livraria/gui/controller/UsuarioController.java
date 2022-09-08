@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/user")
-
 public class UsuarioController implements UserControllerApi {
 
     private final UsuarioService usuarioService;
@@ -34,7 +34,7 @@ public class UsuarioController implements UserControllerApi {
     public ResponseEntity<Usuario> createUser(@RequestBody @Valid UsuarioDTO usuarioDTO){
         Usuario usuario = new Usuario();
         BeanUtils.copyProperties(usuarioDTO, usuario);
-        usuario.setLocalDateTime(LocalDateTime.now(ZoneId.of("UTC")));
+        usuario.setLocalDateTime(LocalDateTime.now(ZoneId.of("GMT-3")));
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuario));
     }
 
@@ -50,7 +50,7 @@ public class UsuarioController implements UserControllerApi {
         }
         Usuario usuario = new Usuario();
         BeanUtils.copyProperties(usuarioDTO, usuario);
-        usuario.setLastModifiedDate(LocalDateTime.now(ZoneId.of("UTC")));
+        usuario.setLastModifiedDate(LocalDateTime.now(ZoneId.of("GMT-3")));
         usuario.setId(usuarioOptional.get().getId());
         usuario.setLocalDateTime(usuarioOptional.get().getLocalDateTime());
 
@@ -58,9 +58,10 @@ public class UsuarioController implements UserControllerApi {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<Usuario>> getAllUser(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC)
-                                                        Pageable pageable){
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getAll(pageable));
+    public ResponseEntity<Page<Usuario>> getAllUser(Pageable pageable){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(usuarioService.getAll(pageable));
     }
 
 

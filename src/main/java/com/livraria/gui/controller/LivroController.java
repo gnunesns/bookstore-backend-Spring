@@ -1,6 +1,7 @@
 package com.livraria.gui.controller;
 
 
+import com.livraria.gui.apiSwagger.LivroControllerApi;
 import com.livraria.gui.model.DTO.LivroDTO;
 import com.livraria.gui.model.Livro;
 import com.livraria.gui.service.LivroService;
@@ -22,7 +23,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/books")
-public class LivroController{
+@CrossOrigin(origins = "*")
+public class LivroController implements LivroControllerApi {
 
     private final LivroService livroService;
 
@@ -36,12 +38,12 @@ public class LivroController{
         Livro livro = new Livro();
         BeanUtils.copyProperties(livroDTO, livro);
         livro.setTotalAlugado(0);
-        livro.setLocalDateTime(LocalDateTime.now(ZoneId.of("UTC")));
+        livro.setLocalDateTime(LocalDateTime.now(ZoneId.of("GMT-3")));
         return ResponseEntity.status(HttpStatus.CREATED).body(livroService.save(livro));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUser(@PathVariable("id") Long id,
+    public ResponseEntity<Object> updateBook(@PathVariable("id") Long id,
                                              @RequestBody @Valid LivroDTO livroDTO){
 
         Optional<Livro> livroOptional = livroService.getId(id);
@@ -50,7 +52,8 @@ public class LivroController{
         }
         Livro livro = new Livro();
         BeanUtils.copyProperties(livroDTO, livro);
-        livro.setLastModifiedDate(LocalDateTime.now(ZoneId.of("UTC")));
+        livro.setTotalAlugado(livroOptional.get().getTotalAlugado());
+        livro.setLastModifiedDate(LocalDateTime.now(ZoneId.of("GMT-3")));
         livro.setId(livroOptional.get().getId());
         livro.setLocalDateTime(livroOptional.get().getLocalDateTime());
 
@@ -69,7 +72,11 @@ public class LivroController{
     @GetMapping("/{id}")
     public ResponseEntity<Object> findById(@PathVariable("id") Long id){
         Optional<Livro> livroOptional = livroService.getId(id);
-        return livroOptional.<ResponseEntity<Object>>map(livro -> ResponseEntity.status(HttpStatus.OK).body(livro)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found"));
+        return livroOptional.<ResponseEntity<Object>>map(livro -> ResponseEntity
+                .status(HttpStatus.OK)
+                .body(livro))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Book not found"));
     }
 
 
