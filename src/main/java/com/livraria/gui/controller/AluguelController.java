@@ -85,6 +85,7 @@ public class AluguelController implements AluguelControllerApi {
     @PutMapping("/{id}")
     public ResponseEntity<Object> devolution(@PathVariable("id") Long id,
                                                  @RequestBody @Valid Aluguel aluguel){
+
         Optional<Aluguel> aluguelOptional = aluguelService.getId(id);
         Aluguel aluguel1 = aluguelOptional.get();
         aluguel1.setLastModifiedDate(LocalDateTime.now(ZoneId.of("GMT-3")));
@@ -96,9 +97,7 @@ public class AluguelController implements AluguelControllerApi {
         } else {
             aluguel1.setStatus(AluguelStatus.ON_TIME);
         }
-
         return ResponseEntity.status(HttpStatus.OK).body(aluguelService.saveDevolution(aluguel1));
-
     }
 
 }

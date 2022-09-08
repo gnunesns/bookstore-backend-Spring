@@ -23,6 +23,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/books")
+@CrossOrigin(origins = "*")
 public class LivroController implements LivroControllerApi {
 
     private final LivroService livroService;
@@ -51,6 +52,7 @@ public class LivroController implements LivroControllerApi {
         }
         Livro livro = new Livro();
         BeanUtils.copyProperties(livroDTO, livro);
+        livro.setTotalAlugado(livroOptional.get().getTotalAlugado());
         livro.setLastModifiedDate(LocalDateTime.now(ZoneId.of("GMT-3")));
         livro.setId(livroOptional.get().getId());
         livro.setLocalDateTime(livroOptional.get().getLocalDateTime());
