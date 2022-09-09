@@ -19,7 +19,7 @@ public class RestHandlerException extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DeleteExceptionUser.class)
     public ResponseEntity<MensagemDeErro> erroDeteleUser(DeleteExceptionUser exception) {
-        var mensagem = new MensagemDeErro(HttpStatus.NOT_ACCEPTABLE.value(), exception.getMessage());
+        MensagemDeErro mensagem = new MensagemDeErro(HttpStatus.NOT_ACCEPTABLE.value(), exception.getMessage());
         return new ResponseEntity<>(mensagem, HttpStatus.NOT_ACCEPTABLE);
     }
 
