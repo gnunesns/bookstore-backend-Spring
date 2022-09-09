@@ -1,13 +1,12 @@
 package com.livraria.gui.service.implement;
 
+import com.livraria.gui.exception.DeleteExceptionUser;
 import com.livraria.gui.model.Usuario;
 import com.livraria.gui.repository.UsuarioRepository;
 import com.livraria.gui.service.UsuarioService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Optional;
 
 
@@ -22,6 +21,9 @@ public class UsuarioImpl implements UsuarioService {
 
     @Override
     public void delete(Usuario usuario) {
+        if(!usuario.getAlugueis().isEmpty()) {
+            throw new DeleteExceptionUser();
+        }
         usuarioRepository.delete(usuario);
     }
 

@@ -25,8 +25,11 @@ public class AluguelImpl implements AluguelService {
 
     @Override
     public void delete(Aluguel aluguel) {
+        Optional<Livro> livroOptional = livroRepository.findById(aluguel.getLivro().getId());
+        Livro livro = livroOptional.get();
+        livro.setQuantidade(livro.getQuantidade() + 1);
+        livro.setTotalAlugado(livro.getTotalAlugado() - 1);
         aluguelRepository.delete(aluguel);
-
     }
 
     @Override

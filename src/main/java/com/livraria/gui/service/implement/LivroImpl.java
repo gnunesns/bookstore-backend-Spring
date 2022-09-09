@@ -1,5 +1,6 @@
 package com.livraria.gui.service.implement;
 
+import com.livraria.gui.exception.DeleteExceptionBooks;
 import com.livraria.gui.model.Livro;
 import com.livraria.gui.repository.LivroRepository;
 import com.livraria.gui.service.LivroService;
@@ -21,6 +22,9 @@ public class LivroImpl implements LivroService {
 
     @Override
     public void delete(Livro livro) {
+        if (!livro.getAlugueis().isEmpty()){
+            throw new DeleteExceptionBooks();
+        }
         livroRepository.delete(livro);
     }
 
