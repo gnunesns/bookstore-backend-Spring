@@ -25,8 +25,7 @@ public class AluguelImpl implements AluguelService {
 
     @Override
     public void delete(Aluguel aluguel) {
-        aluguelRepository.delete(aluguel);
-
+            aluguelRepository.delete(aluguel);
     }
 
     @Override
