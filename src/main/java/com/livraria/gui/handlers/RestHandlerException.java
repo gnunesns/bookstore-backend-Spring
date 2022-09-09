@@ -17,15 +17,6 @@ import java.util.List;
 @ControllerAdvice
 public class RestHandlerException extends ResponseEntityExceptionHandler {
 
-    /*
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<MensagemDeErro> erroDataAluguel(RuntimeException exception) {
-        var mensagem = new MensagemDeErro("Erro no aluguel", HttpStatus.NOT_ACCEPTABLE.value(),
-                exception.getMessage());
-
-        return new ResponseEntity<>(mensagem, HttpStatus.NOT_ACCEPTABLE);
-    }
-    */
     @ExceptionHandler(DeleteExceptionUser.class)
     public ResponseEntity<MensagemDeErro> erroDeteleUser(DeleteExceptionUser exception) {
         var mensagem = new MensagemDeErro(HttpStatus.NOT_ACCEPTABLE.value(), exception.getMessage());
